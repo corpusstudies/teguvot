@@ -1,0 +1,97 @@
+cabal-version: 2.2
+name: teguvot
+version: 1.0
+build-type: Simple
+
+common options
+  default-language: Haskell2010
+
+  build-depends:
+      base
+    , bytestring
+    , containers
+    , generic-lens
+    , lens
+    , text
+    , transformers
+    , vector
+
+  ghc-options:
+    -Wall
+
+  default-extensions:
+    BlockArguments
+    DerivingStrategies
+    DuplicateRecordFields
+    ImportQualifiedPost
+    LambdaCase
+    OverloadedLabels
+    OverloadedStrings
+
+    -- GHC2021
+    BangPatterns
+    BinaryLiterals
+    ConstrainedClassMethods
+    ConstraintKinds
+    DeriveDataTypeable
+    DeriveFoldable
+    DeriveFunctor
+    DeriveGeneric
+    DeriveLift
+    DeriveTraversable
+    EmptyCase
+    EmptyDataDeriving
+    ExistentialQuantification
+    ExplicitForAll
+    FlexibleContexts
+    FlexibleInstances
+    GADTSyntax
+    GeneralisedNewtypeDeriving
+    HexFloatLiterals
+    ImportQualifiedPost
+    InstanceSigs
+    KindSignatures
+    MultiParamTypeClasses
+    NamedFieldPuns
+    NamedWildCards
+    NumericUnderscores
+    PolyKinds
+    PostfixOperators
+    RankNTypes
+    ScopedTypeVariables
+    StandaloneDeriving
+    StandaloneKindSignatures
+    TupleSections
+    TypeApplications
+    TypeOperators
+    TypeSynonymInstances
+
+library
+  import: options
+  exposed-modules:
+      Teguvot
+  hs-source-dirs:
+      library
+
+executable teguvot
+  import: options
+  main-is: Main.hs
+  hs-source-dirs:
+      executable
+  ghc-options:
+      -threaded
+  build-depends:
+      teguvot
+
+test-suite test
+  import: options
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  hs-source-dirs:
+      test
+  ghc-options:
+      -threaded
+  build-depends:
+      hspec
+    , hspec-expectations
+    , teguvot
