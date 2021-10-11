@@ -1,3 +1,3 @@
-module Main (main) where
+module Main (module Teguvot) where
 
 import Teguvot (main)
