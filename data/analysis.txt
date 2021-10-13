@@ -1,24 +1,68 @@
-1. in / prep+abl
-2. nómine / noun abl sg neut
-3. patris / noun gen sg masc
-4. et / conj
-5. fílii / noun gen sg masc
-6. et / conj
-7. spíritus / noun gen sg masc
-8. sancti / adj gen sg masc
-9. amen / interj
-+ 1-2  1-3  1,2,5  1,2,7  1,2,7,8  1-5  1-4,7,8  1,2,5-8
+1/in : prep+abl
+2/nómine : noun abl sg neut
+3/patris : noun gen sg masc
+4/et : conj
+5/fílii : noun gen sg masc
+6/et : conj
+7/spíritus : noun gen sg masc
+8/sancti : adj gen sg masc
+9/amen : interj
++ 1-2 : prep+obj
++ 2-3 : noun+gen
++ 7-8 : noun+adj
++ 1-3 : in-nomine+gen
++ 1-5 : noun+gen+et
++ 1-8 : noun+gen+et/repeated
++ 1-9 : sentence
 
-10. introíbo / verb fut 1p sg
-11. ad / prep+acc
-12. altáre / noun neut acc sg
-13. dei / noun gen masc sg
-+ 10-11  10-12  10-13
+10/introíbo : verb fut 1p sg
+11/ad : prep+acc
+12/altáre : noun neut acc sg
+13/dei : noun gen masc sg
++ 11-12 : prep+obj
++ 10-12 : introibo-ad+acc
++ 12-13 : noun+gen
 
-14. ad / prep+acc
-15. deum / noun acc sg masc
-16. qui / rel nom sg masc
-17. lætíficat / verb 3rd pres sg
-18. juventútem / noun sg fem acc
-19. meam / noun 
-+ 10,14,15  17,18  17-19  16-17  16-19  14-19  10,14-19
+14/ad : prep+acc
+15/deum : noun acc sg masc
+16/qui : rel nom sg masc
+17/lætíficat : verb 3rd pres sg
+18/juventútem : noun sg fem acc
+19/meam : adj/personal sg fem acc
++ 14-15 : prep+obj
++ 11-15 : appos+repeated/prep
++ 15-17 : rel+refer/acc+self/nom
++ 17-18 : laetificat+acc
++ 18-19 : noun+adj/personal
++ 10-19 : sentence
+
+20/júdica : verb imper sg
+21/me : pron/personal acc sg
+22/deus : noun voc sg masc
+
+23/et : conj
+24/discérne : verb imper sg
+25/causam : noun fem sg acc
+26/meam : adj/personal sg fem acc
+27/de : prep+abl
+28/gente : noun abl fem sg
+29/non : part/neg
+30/sancta : adj abl fem sg
++ 20-25 : conj/sent
++ 24-28 : discerne+acc+de+abl
++ 25-26 : noun+adj/personal
++ 28-30 : noun+adj/neg
++ 20-30 : sentence
+
+31/ab : prep+abl
+32/hómine : noun masc abl sg
+33/iníquo : adj masc abl sg
+34/et : conj
+35/dolóso : adj masc abl sg
+36/érue : verb imper sg
+37/me : pron sg acc
++ 31-32 : prep+obj
++ 32-33 : noun+adj
++ 32-35 : noun+adj+et
++ 31-37 : erue+acc+ab+abl
++ 31-37 : sentence
