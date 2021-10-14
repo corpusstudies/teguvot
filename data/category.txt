@@ -1,0 +1,28 @@
+noun : part-of-speech
+verb : part-of-speech
+interj : part-of-speech
+conj : part-of-speech
+prep : part-of-speech
+
+prep+abl : prep
+prep+acc : prep
+
+prep+obj
+noun+gen/poss
+et/repeated+np
+
+sentence
+
+nom : case
+gen : case
+dat : case
+acc : case
+abl : case
+voc : case
+
+sg : number
+pl : number
+
+masc : gender
+fem : gender
+neut : gender

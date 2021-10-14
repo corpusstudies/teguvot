@@ -12,6 +12,7 @@ common options
     , containers
     , generic-lens
     , lens
+    , megaparsec
     , text
     , transformers
     , vector
@@ -70,6 +71,7 @@ library
   import: options
   exposed-modules:
       Teguvot
+      Teguvot.File
   hs-source-dirs:
       library
 
