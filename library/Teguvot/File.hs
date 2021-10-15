@@ -122,8 +122,8 @@ itemsParser =
     _ <- eol
     pure item
 
-readParseFile :: FilePath -> IO [Item]
-readParseFile filePath = do
+readParseAnalysisFile :: FilePath -> IO [Item]
+readParseAnalysisFile filePath = do
   bytes <- readFile "data/analysis.txt"
   let text :: Text = decodeUtf8With lenientDecode bytes
   let result = parse (itemsParser <* eof) filePath text

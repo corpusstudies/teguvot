@@ -4,5 +4,5 @@ import Teguvot.File
 
 main :: IO ()
 main = do
-  items <- readParseFile "data/analysis.txt"
+  items <- readParseAnalysisFile "data/analysis.txt"
   print (length items)
