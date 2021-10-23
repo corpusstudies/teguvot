@@ -19,13 +19,13 @@ type Parser = Parsec Void Text
 
 newtype Analysis = Analysis Text
   deriving newtype Show
-newtype Form = Form Text
+newtype Syllable = Syllable Text
   deriving newtype Show
 newtype WordNumber = WordNumber Natural
   deriving newtype (Show, Num)
 
 data CorpusWord = CorpusWord
-  { form :: Form
+  { syllables :: [Syllable]
   , wordNumber :: WordNumber
   , analyses :: [Analysis]
   }
@@ -48,18 +48,26 @@ data Item
   | ItemCombo Combo
   deriving (Generic, Show)
 
-formParser :: Parser Form
-formParser =
-  Form <$>
-    takeWhile1P (Just "Form letter") isLetter
+syllableParser :: Parser Syllable
+syllableParser =
+  Syllable <$>
+    takeWhile1P (Just "Syllable letter") isLetter
+
+syllablesParser :: Parser [Syllable]
+syllablesParser = do
+  first <- syllableParser
+  rest <- many do
+    _ <- char '-'
+    syllableParser
+  pure (first : rest)
 
 corpusWordParser :: Parser CorpusWord
 corpusWordParser = do
   wordNumber <- wordNumberParser
   _ <- char '/'
-  form <- formParser
+  syllables <- syllablesParser
   analyses <- analysesParser
-  pure CorpusWord { form, wordNumber, analyses }
+  pure CorpusWord { syllables, wordNumber, analyses }
 
 naturalParser :: Parser Natural
 naturalParser = do

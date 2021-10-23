@@ -1,32 +1,32 @@
 1/in : prep+abl
-2/nómine : noun abl sg neut
-3/patris : noun gen sg masc
+2/nó-mi-ne : noun abl sg neut
+3/pa-tris : noun gen sg masc
 4/et : conj
-5/fílii : noun gen sg masc
+5/fí-li-i : noun gen sg masc
 6/et : conj
-7/spíritus : noun gen sg masc
-8/sancti : adj gen sg masc
-9/amen : interj
+7/spí-ri-tus : noun gen sg masc
+8/sanc-ti : adj gen sg masc
+9/a-men : interj
 + 1-8 : prep+obj
 + 2-8 : noun+gen/poss
 + 3-8 : et/repeated+np
 + 7-8 : noun+adj
 + 1-9
 
-10/introíbo : verb fut 1p sg
+10/in-tro-í-bo : verb fut 1p sg
 11/ad : prep+acc
-12/altáre : noun neut acc sg
-13/dei : noun gen masc sg
+12/al-tá-re : noun neut acc sg
+13/de-i : noun gen masc sg
 + 11-12 : prep+obj
 + 10-12 : introibo-ad+acc
 + 12-13 : noun+gen
 
 14/ad : prep+acc
-15/deum : noun acc sg masc
+15/de-um : noun acc sg masc
 16/qui : rel nom sg masc
-17/lætíficat : verb 3p pres sg
-18/juventútem : noun sg fem acc
-19/meam : adj/personal sg fem acc
+17/læ-tí-fi-cat : verb 3p pres sg
+18/ju-ven-tú-tem : noun sg fem acc
+19/me-am : adj/personal sg fem acc
 + 14-15 : prep+obj
 + 11-15 : appos+repeated/prep
 + 15-17 : rel+refer/acc+self/nom
@@ -34,18 +34,18 @@
 + 18-19 : noun+adj/personal
 + 10-19
 
-20/júdica : verb imper sg
+20/jú-di-ca : verb imper sg
 21/me : pron/personal acc sg
-22/deus : noun voc sg masc
+22/de-us : noun voc sg masc
 
 23/et : conj
-24/discérne : verb imper sg
-25/causam : noun fem sg acc
-26/meam : adj/personal sg fem acc
+24/di-scér-ne : verb imper sg
+25/cau-sam : noun fem sg acc
+26/me-am : adj/personal sg fem acc
 27/de : prep+abl
-28/gente : noun abl fem sg
+28/gen-te : noun abl fem sg
 29/non : part/neg
-30/sancta : adj abl fem sg
+30/sanc-ta : adj abl fem sg
 + 20-25 : conj/sent
 + 24-28 : discerne+acc+de+abl
 + 25-26 : noun+adj/personal
@@ -53,11 +53,11 @@
 + 20-30
 
 31/ab : prep+abl
-32/hómine : noun masc abl sg
-33/iníquo : adj masc abl sg
+32/hó-mi-ne : noun masc abl sg
+33/i-ní-quo : adj masc abl sg
 34/et : conj
-35/dolóso : adj masc abl sg
-36/érue : verb imper sg
+35/do-ló-so : adj masc abl sg
+36/é-ru-e : verb imper sg
 37/me : pron sg acc
 + 31-32 : prep+obj
 + 32-33 : noun+adj
