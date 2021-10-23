@@ -130,14 +130,22 @@ itemsParser =
     _ <- eol
     pure item
 
-readParseAnalysisFile :: FilePath -> IO [Item]
-readParseAnalysisFile filePath = do
-  bytes <- readFile "data/analysis.txt"
-  let text :: Text = decodeUtf8With lenientDecode bytes
-  let result = parse (itemsParser <* eof) filePath text
+readFileAsText :: FilePath -> IO Text
+readFileAsText filePath = do
+  bytes <- readFile filePath
+  let text = decodeUtf8With lenientDecode bytes
+  pure text
+
+readParseFileOrDie :: Parser a -> FilePath -> IO a
+readParseFileOrDie parser filePath = do
+  text <- readFileAsText filePath
+  let result = parse (parser <* eof) filePath text
   case result of
     Left errorBundle -> do
-      putStrLn ("Error in analysis: " <> filePath)
+      putStrLn ("Error in: " <> filePath)
       putStrLn (errorBundlePretty errorBundle)
       exitFailure
-    Right items -> pure items
+    Right value -> pure value
+
+readParseAnalysisFile :: FilePath -> IO [Item]
+readParseAnalysisFile = readParseFileOrDie itemsParser
