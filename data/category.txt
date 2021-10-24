@@ -1,3 +1,4 @@
+part-of-speech
 noun : part-of-speech
 verb : part-of-speech
 interj : part-of-speech
@@ -7,12 +8,11 @@ prep : part-of-speech
 prep+abl : prep
 prep+acc : prep
 
-prep+obj
+prep+obj : prep
 noun+gen/poss
 et/repeated+np
 
-sentence
-
+case
 nom : case
 gen : case
 dat : case
@@ -20,9 +20,12 @@ acc : case
 abl : case
 voc : case
 
+number
 sg : number
 pl : number
 
+gender
 masc : gender
 fem : gender
 neut : gender
+noun : whatever

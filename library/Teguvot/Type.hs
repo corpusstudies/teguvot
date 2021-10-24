@@ -5,12 +5,20 @@ import GHC.Generics (Generic)
 import Numeric.Natural (Natural)
 import Prelude hiding (length, readFile)
 
-newtype Analysis = Analysis Text
-  deriving newtype Show
+newtype AnalysisName = AnalysisName Text
+  deriving newtype (Eq, Ord, Show)
 newtype Syllable = Syllable Text
-  deriving newtype Show
+  deriving newtype (Eq, Ord, Show)
 newtype WordNumber = WordNumber Natural
-  deriving newtype (Show, Num)
+  deriving newtype (Eq, Ord, Show, Num)
+newtype Location = Location Text
+  deriving newtype (Eq, Ord, Show)
+
+data Analysis = Analysis
+  { name :: AnalysisName
+  , location :: Location
+  }
+  deriving (Generic, Show)
 
 data CorpusWord = CorpusWord
   { syllables :: [Syllable]
@@ -28,16 +36,5 @@ data Range = Range
 data Combo = Combo
   { range :: Range
   , analyses :: [Analysis]
-  }
-  deriving (Generic, Show)
-
-data AnalysisItem
-  = AnalysisItemWord CorpusWord
-  | AnalysisItemCombo Combo
-  deriving (Generic, Show)
-
-data CategoryItem = CategoryItem
-  { analysis :: Analysis
-  , implications :: [Analysis]
   }
   deriving (Generic, Show)

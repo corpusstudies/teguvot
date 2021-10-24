@@ -13,6 +13,7 @@ common options
     , generic-lens
     , lens
     , megaparsec
+    , pretty-simple
     , text
     , transformers
     , vector
@@ -21,6 +22,7 @@ common options
     -Wall
 
   default-extensions:
+    AllowAmbiguousTypes
     BlockArguments
     DerivingStrategies
     DuplicateRecordFields

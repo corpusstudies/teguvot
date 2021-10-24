@@ -2,12 +2,14 @@ module Teguvot.File where
 
 import Data.ByteString (readFile)
 import Data.Char (isLower, isDigit, digitToInt, isLetter)
+import Data.Generics.Labels ()
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Data.Text.Encoding (decodeUtf8With)
 import Data.Text.Encoding.Error (lenientDecode)
 import Data.Void (Void)
+import GHC.Generics (Generic)
 import Numeric.Natural (Natural)
 import Prelude hiding (length, readFile)
 import System.Exit (exitFailure)
@@ -16,6 +18,23 @@ import Text.Megaparsec
 import Text.Megaparsec.Char hiding (space)
 
 type Parser = Parsec Void Text
+
+data AnalysisItem
+  = AnalysisItemWord CorpusWord
+  | AnalysisItemCombo Combo
+  deriving (Generic, Show)
+
+data CategoryItem = CategoryItem
+  { analysis :: Analysis
+  , implications :: [Analysis]
+  }
+  deriving (Generic, Show)
+
+getLocation :: Parser Location
+getLocation = do
+  sourcePos <- getSourcePos
+  (pure . Location . Text.pack . sourcePosPretty)
+    sourcePos
 
 syllableParser :: Parser Syllable
 syllableParser =
@@ -59,14 +78,17 @@ spaceParser = char ' '
 
 analysisParser :: Parser Analysis
 analysisParser = do
+  location <- getLocation
   let isAnalysisChar c
         = isLower c
         || isDigit c
         || c == '+'
         || c == '-'
         || c == '/'
-  Analysis <$>
-    takeWhile1P (Just "Analysis char") isAnalysisChar
+  name <-
+    AnalysisName <$>
+      takeWhile1P (Just "Analysis char") isAnalysisChar
+  pure Analysis {name, location}
 
 analysesParser :: Parser [Analysis]
 analysesParser = do
@@ -108,7 +130,9 @@ categoryItemParser :: Parser CategoryItem
 categoryItemParser = do
   analysis <- analysisParser
   implications <- analysesParser
-  pure CategoryItem {analysis, implications}
+  pure
+    CategoryItem
+      {analysis, implications}
 
 categoryItemsParser :: Parser [CategoryItem]
 categoryItemsParser =
