@@ -4,6 +4,12 @@ verb : part-of-speech
 interj : part-of-speech
 conj : part-of-speech
 prep : part-of-speech
+adj : part-of-speech
+rel : part-of-speech
+pron : part-of-speech
+
+part/neg
+conj/sent
 
 prep+abl : prep
 prep+acc : prep
@@ -11,6 +17,20 @@ prep+acc : prep
 prep+obj : prep
 noun+gen/poss
 et/repeated+np
+
+noun+adj : noun
+noun+adj/neg
+noun+adj+et
+
+noun+gen : noun
+
+adj/personal
+pron/personal
+noun+adj/personal
+
+appos+repeated/prep
+
+rel+refer/acc+self/nom
 
 case
 nom : case
@@ -28,4 +48,18 @@ gender
 masc : gender
 fem : gender
 neut : gender
-noun : whatever
+
+tense
+pres : tense
+fut : tense
+imper : tense
+
+person
+1p : person
+2p : person
+3p : person
+
+introibo-ad+acc
+laetificat+acc
+discerne+acc+de+abl
+erue+acc+ab+abl
