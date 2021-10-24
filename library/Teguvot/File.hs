@@ -48,6 +48,12 @@ data AnalysisItem
   | AnalysisItemCombo Combo
   deriving (Generic, Show)
 
+data CategoryItem = CategoryItem
+  { analysis :: Analysis
+  , implications :: [Analysis]
+  }
+  deriving (Generic, Show)
+
 syllableParser :: Parser Syllable
 syllableParser =
   Syllable <$>
@@ -122,13 +128,28 @@ analysisItemParser
   = try (AnalysisItemWord <$> corpusWordParser)
   <|> AnalysisItemCombo <$> comboParser
 
-analysisItemsParser :: Parser [AnalysisItem]
-analysisItemsParser =
+-- skips empty lines
+onePerLineParser :: Parser a -> Parser [a]
+onePerLineParser perLineParser =
   some do
     _ <- many eol
-    item <- analysisItemParser
+    item <- perLineParser
     _ <- eol
     pure item
+
+analysisItemsParser :: Parser [AnalysisItem]
+analysisItemsParser =
+  onePerLineParser analysisItemParser
+
+categoryItemParser :: Parser CategoryItem
+categoryItemParser = do
+  analysis <- analysisParser
+  implications <- analysesParser
+  pure CategoryItem {analysis, implications}
+
+categoryItemsParser :: Parser [CategoryItem]
+categoryItemsParser =
+  onePerLineParser categoryItemParser
 
 readFileAsText :: FilePath -> IO Text
 readFileAsText filePath = do
@@ -150,3 +171,7 @@ readParseFileOrDie parser filePath = do
 readParseAnalysisFile :: FilePath -> IO [AnalysisItem]
 readParseAnalysisFile =
   readParseFileOrDie analysisItemsParser
+
+readParseCategoryFile :: FilePath -> IO [CategoryItem]
+readParseCategoryFile =
+  readParseFileOrDie categoryItemsParser
