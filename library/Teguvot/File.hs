@@ -43,9 +43,9 @@ data Combo = Combo
   }
   deriving (Generic, Show)
 
-data Item
-  = ItemWord CorpusWord
-  | ItemCombo Combo
+data AnalysisItem
+  = AnalysisItemWord CorpusWord
+  | AnalysisItemCombo Combo
   deriving (Generic, Show)
 
 syllableParser :: Parser Syllable
@@ -117,16 +117,16 @@ comboParser = do
   analyses <- analysesParser
   pure Combo { range, analyses }
 
-itemParser :: Parser Item
-itemParser
-  = try (ItemWord <$> corpusWordParser)
-  <|> ItemCombo <$> comboParser
+analysisItemParser :: Parser AnalysisItem
+analysisItemParser
+  = try (AnalysisItemWord <$> corpusWordParser)
+  <|> AnalysisItemCombo <$> comboParser
 
-itemsParser :: Parser [Item]
-itemsParser =
+analysisItemsParser :: Parser [AnalysisItem]
+analysisItemsParser =
   some do
     _ <- many eol
-    item <- itemParser
+    item <- analysisItemParser
     _ <- eol
     pure item
 
@@ -147,5 +147,6 @@ readParseFileOrDie parser filePath = do
       exitFailure
     Right value -> pure value
 
-readParseAnalysisFile :: FilePath -> IO [Item]
-readParseAnalysisFile = readParseFileOrDie itemsParser
+readParseAnalysisFile :: FilePath -> IO [AnalysisItem]
+readParseAnalysisFile =
+  readParseFileOrDie analysisItemsParser

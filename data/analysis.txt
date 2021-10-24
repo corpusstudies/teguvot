@@ -1,11 +1,11 @@
 1/in : prep+abl
 2/nó-mi-ne : noun abl sg neut
-3/pa-tris : noun gen sg masc
+3/Pa-tris : noun gen sg masc
 4/et : conj
-5/fí-li-i : noun gen sg masc
+5/Fí-li-i : noun gen sg masc
 6/et : conj
-7/spí-ri-tus : noun gen sg masc
-8/sanc-ti : adj gen sg masc
+7/Spí-ri-tus : noun gen sg masc
+8/Sanc-ti : adj gen sg masc
 9/a-men : interj
 + 1-8 : prep+obj
 + 2-8 : noun+gen/poss
@@ -16,13 +16,13 @@
 10/in-tro-í-bo : verb fut 1p sg
 11/ad : prep+acc
 12/al-tá-re : noun neut acc sg
-13/de-i : noun gen masc sg
+13/De-i : noun gen masc sg
 + 11-12 : prep+obj
 + 10-12 : introibo-ad+acc
 + 12-13 : noun+gen
 
 14/ad : prep+acc
-15/de-um : noun acc sg masc
+15/De-um : noun acc sg masc
 16/qui : rel nom sg masc
 17/læ-tí-fi-cat : verb 3p pres sg
 18/ju-ven-tú-tem : noun sg fem acc
@@ -36,7 +36,7 @@
 
 20/jú-di-ca : verb imper sg
 21/me : pron/personal acc sg
-22/de-us : noun voc sg masc
+22/De-us : noun voc sg masc
 
 23/et : conj
 24/di-scér-ne : verb imper sg
