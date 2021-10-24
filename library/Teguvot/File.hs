@@ -1,58 +1,21 @@
 module Teguvot.File where
 
 import Data.ByteString (readFile)
+import Data.Char (isLower, isDigit, digitToInt, isLetter)
+import Data.Maybe (fromMaybe)
 import Data.Text (Text)
+import Data.Text qualified as Text
 import Data.Text.Encoding (decodeUtf8With)
 import Data.Text.Encoding.Error (lenientDecode)
 import Data.Void (Void)
 import Numeric.Natural (Natural)
 import Prelude hiding (length, readFile)
+import System.Exit (exitFailure)
+import Teguvot.Type
 import Text.Megaparsec
 import Text.Megaparsec.Char hiding (space)
-import System.Exit (exitFailure)
-import Data.Maybe (fromMaybe)
-import Data.Char (isLower, isDigit, digitToInt, isLetter)
-import Data.Text qualified as Text
-import GHC.Generics (Generic)
 
 type Parser = Parsec Void Text
-
-newtype Analysis = Analysis Text
-  deriving newtype Show
-newtype Syllable = Syllable Text
-  deriving newtype Show
-newtype WordNumber = WordNumber Natural
-  deriving newtype (Show, Num)
-
-data CorpusWord = CorpusWord
-  { syllables :: [Syllable]
-  , wordNumber :: WordNumber
-  , analyses :: [Analysis]
-  }
-  deriving (Generic, Show)
-
-data Range = Range
-  { start :: WordNumber
-  , end :: WordNumber
-  }
-  deriving (Generic, Show)
-
-data Combo = Combo
-  { range :: Range
-  , analyses :: [Analysis]
-  }
-  deriving (Generic, Show)
-
-data AnalysisItem
-  = AnalysisItemWord CorpusWord
-  | AnalysisItemCombo Combo
-  deriving (Generic, Show)
-
-data CategoryItem = CategoryItem
-  { analysis :: Analysis
-  , implications :: [Analysis]
-  }
-  deriving (Generic, Show)
 
 syllableParser :: Parser Syllable
 syllableParser =
