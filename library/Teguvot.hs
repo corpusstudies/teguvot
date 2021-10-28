@@ -91,6 +91,8 @@ getAnalyses = \case
 
 main :: IO ()
 main = do
+  textItems <- readParseTextFile "data/text.txt"
+
   categoryMap <- loadCategoryMap "data/category.txt"
 
   analysisItems <-
@@ -99,8 +101,10 @@ main = do
     categoryMap
     (concatMap getAnalyses analysisItems)
 
-  putStrLn $
-    (show . length) analysisItems
+  putStrLn $ ""
+    <> (show . length) textItems
+    <> " text items; "
+    <> (show . length) analysisItems
     <> " analysis items; "
     <> (show . length) categoryMap
     <> " category items."

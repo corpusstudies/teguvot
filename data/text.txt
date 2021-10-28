@@ -1,6 +1,5 @@
 # Source: https://github.com/DivinumOfficium/divinum-officium/blob/0464c452ad55503edafb47f5b9799442a97b089f/web/www/missa/Latin/Ordo/Ordo.txt
-
-v. In nómine Patris, + et Fílii, et Spíritus Sancti. Amen.
+v. In nómine Patris, et Fílii, et Spíritus Sancti. Amen.
 
 S. Introíbo ad altáre Dei.
 M. Ad Deum, qui lætíficat juventútem meam.
@@ -17,7 +16,7 @@ M. Ad Deum, qui lætíficat juventútem meam.
 
 V. Adjutórium nostrum in nómine Dómini.
 R. Qui fecit cælum et terram.
-v. Confíteor Deo omnipoténti, beátæ Maríæ semper Vírgini, beáto Michaéli Archángelo, beáto Joánni Baptístæ, sanctis Apóstolis Petro et Paulo, ómnibus Sanctis, et vobis, fratres: quia peccávi nimis cogitatióne, verbo et ópere: (Percutit sibi pectus ter, dicens:) mea culpa, mea culpa, mea máxima culpa. Ideo precor beátam Maríam semper Vírginem, beátum Michaélem Archángelum, beátum Joánnem Baptístam, sanctos Apóstolos Petrum et Paulum, omnes Sanctos, et vos, fratres, oráre pro me ad Dóminum, Deum nostrum.
+v. Confíteor Deo omnipoténti, beátæ Maríæ semper Vírgini, beáto Michaéli Archángelo, beáto Joánni Baptístæ, sanctis Apóstolis Petro et Paulo, ómnibus Sanctis, et vobis, fratres: quia peccávi nimis cogitatióne, verbo et ópere: mea culpa, mea culpa, mea máxima culpa. Ideo precor beátam Maríam semper Vírginem, beátum Michaélem Archángelum, beátum Joánnem Baptístam, sanctos Apóstolos Petrum et Paulum, omnes Sanctos, et vos, fratres, oráre pro me ad Dóminum, Deum nostrum.
 M. Misereátur tui omnípotens Deus, et, dimíssis peccátis tuis, perdúcat te ad vitam ætérnam.
 
 S. Amen.
@@ -37,22 +36,11 @@ V. Dóminus vobíscum.
 R. Et cum spíritu tuo.
 v. Orémus
 
-S. Kýrie, eléison.
-M. Kýrie, eléison.
-S. Kýrie, eléison.
-M. Christe, eléison.
-S. Christe, eléison.
-M. Christe, eléison.
-S. Kýrie, eléison.
-M. Kýrie, eléison.
-S. Kýrie, eléison.
-
-V. Sequéntia sancti Evangélii secúndum N.
+V. Sequéntia sancti Evangélii secúndum
 R. Glória tibi, Dómine.
 R. Laus tibi, Christe.
 
 S. Oráte, fratres: ut meum ac vestrum sacrifícium acceptábile fiat apud Deum Patrem omnipoténtem.
-!Minister, seu circumstantes respondent: alioquin ipsemet Sacerdos:
 M. Suscípiat Dóminus sacrifícium de mánibus tuis ad laudem et glóriam nominis sui, ad utilitátem quoque nostram, totiúsque Ecclésiæ suæ sanctæ.
 
 # Præfatio
@@ -66,12 +54,23 @@ R. Dignum et justum est.
 V. Per ómnia sǽcula sæculórum.
 R. Amen.
 
+v. Orémus: Præcéptis salutáribus móniti, et divína institutióne formáti audémus dícere:
+v. Pater noster, qui es in cælis. Sanctificétur nomen tuum. Advéniat regnum tuum. Fiat volúntas tua, sicut in cælo et in terra. Panem nostrum quotidiánum da nobis hódie. Et dimítte nobis débita nostra, sicut et nos dimíttimus debitóribus nostris. Et ne nos indúcas in tentatiónem:
+R. Sed líbera nos a malo.
+
 V. Pax Dómini sit semper vobíscum.
 R. Et cum spíritu tuo.
 
 V. Dómine, non sum dignus, ut intres sub tectum meum: sed tantum dic verbo, et sanábitur ánima mea.
-V. Dómine, non sum dignus, ut intres sub tectum meum: sed tantum dic verbo, et sanábitur ánima mea.
-V. Dómine, non sum dignus, ut intres sub tectum meum: sed tantum dic verbo, et sanábitur ánima mea.
 
-Ite, Missa est
-Deo grátias.
+v. Ite, Missa est
+R. Deo grátias.
+
+v. Benedícat vos omnípotens Deus,
+v. Pater, et Fílius, et Spíritus Sanctus.
+R. Amen.
+
+S. Ave María, grátia plena, Dóminus tecum, benedícta tu in muliéribus et benedíctus fructus ventris tui, Jesus.
+O. Sancta María, Mater Dei, ora pro nobis peccatóribus, nunc et in hora mortis nostræ. Amen.
+
+O. Salve Regína, Mater misericórdiæ, vita, dulcédo, et spes nostra, salve. Ad te clamámus, éxsules fílii Evæ. Ad te suspirámus geméntes et flentes in hac lacrymárum valle. Eia ergo, Advocáta nostra, illos tuos misericórdes óculos ad nos convérte. Et Jesum, benedíctum fructum ventris tui, nobis, post hoc exílium, osténde. O clemens, o pia, o dulcis Virgo Mária.

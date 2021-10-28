@@ -1,7 +1,7 @@
 module Teguvot.File where
 
 import Data.ByteString (readFile)
-import Data.Char (isLower, isDigit, digitToInt, isLetter)
+import Data.Char (isLower, isDigit, digitToInt, isLetter, isPunctuation)
 import Data.Generics.Labels ()
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
@@ -11,7 +11,7 @@ import Data.Text.Encoding.Error (lenientDecode)
 import Data.Void (Void)
 import GHC.Generics (Generic)
 import Numeric.Natural (Natural)
-import Prelude hiding (length, readFile)
+import Prelude hiding (length, readFile, Word, words)
 import System.Exit (exitFailure)
 import Teguvot.Type
 import Text.Megaparsec
@@ -29,6 +29,16 @@ data CategoryItem = CategoryItem
   , implications :: [Analysis]
   }
   deriving (Generic, Show)
+
+data TextLine = TextLine
+  { speaker :: Speaker
+  , words :: [Word]
+  }
+
+data TextItem
+  = TextItemComment Comment
+  | TextItemTextLine TextLine
+  | TextItemBreak
 
 getLocation :: Parser Location
 getLocation = do
@@ -138,6 +148,64 @@ categoryItemsParser :: Parser [CategoryItem]
 categoryItemsParser =
   onePerLineParser categoryItemParser
 
+commentLineParser :: Parser Comment
+commentLineParser = do
+  _ <- char '#'
+  _ <- spaceParser
+  let isCommentChar c
+        = isLetter c
+        || isDigit c
+        || isPunctuation c
+        || c == ' '
+  comment <- 
+    Comment <$>
+      takeWhile1P (Just "Comment char") isCommentChar
+  _ <- eol
+  pure comment
+
+speakerParser :: Parser Speaker
+speakerParser = do
+  let isSpeakerChar c
+        = c == 'v'
+        || c == 'S'
+        || c == 'M'
+        || c == 'V'
+        || c == 'R'
+        || c == 'O'
+  speaker <- Speaker . Text.singleton <$> satisfy isSpeakerChar
+  _ <- char '.'
+  _ <- spaceParser
+  pure speaker
+
+wordParser :: Parser Word
+wordParser = do
+  location <- getLocation
+  form <- WordForm <$>
+    takeWhile1P (Just "Word letter") isLetter
+  punctuation <- optional
+    (Punctuation <$>
+      takeWhile1P (Just "Punctuation") isPunctuation)
+  pure Word {form, punctuation, location}
+
+textLineParser :: Parser TextLine
+textLineParser = do
+  speaker <- speakerParser
+  word1 <- wordParser
+  wordsRest <- many do
+    _ <- spaceParser
+    wordParser
+  let words = word1 : wordsRest
+  pure TextLine {speaker, words}
+
+textItemParser :: Parser TextItem
+textItemParser
+  = TextItemBreak <$ eol
+  <|> TextItemComment <$> commentLineParser
+  <|> TextItemTextLine <$> textLineParser
+
+textItemsParser :: Parser [TextItem]
+textItemsParser = many textItemParser
+
 readFileAsText :: FilePath -> IO Text
 readFileAsText filePath = do
   bytes <- readFile filePath
@@ -162,3 +230,7 @@ readParseAnalysisFile =
 readParseCategoryFile :: FilePath -> IO [CategoryItem]
 readParseCategoryFile =
   readParseFileOrDie categoryItemsParser
+
+readParseTextFile :: FilePath -> IO [TextItem]
+readParseTextFile =
+  readParseFileOrDie textItemsParser
