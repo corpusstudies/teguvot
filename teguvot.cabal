@@ -8,6 +8,7 @@ common options
 
   build-depends:
       base
+    , bimap
     , bytestring
     , containers
     , generic-lens
@@ -16,6 +17,7 @@ common options
     , pretty-simple
     , text
     , transformers
+    , validation
     , vector
 
   ghc-options:
@@ -74,6 +76,7 @@ library
   exposed-modules:
       Teguvot
       Teguvot.File
+      Teguvot.Stage
       Teguvot.Type
   hs-source-dirs:
       library
