@@ -1,15 +1,20 @@
 module Teguvot where
 
-import Teguvot.File
-import Teguvot.Type
+import Control.Lens ((^.))
+import Data.Coerce (coerce)
+import Data.Foldable (foldl')
 import Data.Map.Strict (Map)
 import Data.Map.Strict qualified as Map
-import System.Exit (exitFailure)
-import Data.Foldable (foldl')
-import Text.Pretty.Simple (pPrintLightBg)
-import GHC.Generics (Generic)
-import Control.Lens ((^.))
 import Data.Maybe (mapMaybe)
+import Data.Set qualified as Set
+import Data.Text (Text)
+import Data.Text qualified as Text
+import GHC.Generics (Generic)
+import Prelude hiding (words)
+import System.Exit (exitFailure)
+import Teguvot.File
+import Teguvot.Type
+import Text.Pretty.Simple (pPrintLightBg)
 
 data DupCategoryItem = DupCategoryItem
   { name :: AnalysisName
@@ -89,6 +94,18 @@ getAnalyses = \case
   AnalysisItemWord CorpusWord {analyses} -> analyses
   AnalysisItemCombo Combo {analyses} -> analyses
 
+countUniqueWords :: [TextItem] -> Int
+countUniqueWords items =
+  let getWords (TextItemComment _) = []
+      getWords TextItemBreak = []
+      getWords (TextItemTextLine TextLine {words}) =
+        words
+      allWords = concatMap getWords items
+      getCommonForm Word {form} =
+        Text.toLower (coerce @_ @Text form)
+      forms = getCommonForm <$> allWords
+  in Set.size (Set.fromList forms)
+
 main :: IO ()
 main = do
   textItems <- readParseTextFile "data/text.txt"
@@ -104,6 +121,8 @@ main = do
   putStrLn $ ""
     <> (show . length) textItems
     <> " text items; "
+    <> (show . countUniqueWords) textItems
+    <> " unique forms; "
     <> (show . length) analysisItems
     <> " analysis items; "
     <> (show . length) categoryMap
