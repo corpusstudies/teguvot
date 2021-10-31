@@ -14,6 +14,7 @@ import Prelude hiding (words)
 import System.Exit (exitFailure)
 import Teguvot.File
 import Teguvot.Type
+import Teguvot.Stage qualified as Stage
 import Text.Pretty.Simple (pPrintLightBg)
 
 data DupCategoryItem = DupCategoryItem
@@ -108,6 +109,10 @@ countUniqueWords items =
 
 main :: IO ()
 main = do
+  Stage.runStages "data/text.txt"
+
+parse :: IO ()
+parse = do
   textItems <- readParseTextFile "data/text.txt"
 
   categoryMap <- loadCategoryMap "data/category.txt"

@@ -1,12 +1,16 @@
 module Teguvot.Stage where
 
+import Control.Lens (TraversableWithIndex (..), FoldableWithIndex (..))
 import Data.Bimap (Bimap)
 import Data.Bimap qualified as Bimap
+import Data.ByteString qualified as ByteString
 import Data.Char (ord)
-import Data.Either (partitionEithers)
+import Data.Foldable qualified as Foldable
+import Data.Map.Strict qualified as Map
+import Data.Validation (Validation (..))
 import Data.Word (Word8)
 import GHC.Generics (Generic)
-import Data.Foldable (foldl')
+import Text.Pretty.Simple (pPrintLightBg)
 
 sample :: Bimap Word8 ()
 sample = Bimap.fromList
@@ -27,14 +31,11 @@ data BimapBuildError a b = BimapBuildError
   }
   deriving (Generic, Show)
 
-build :: forall a b. (Ord a, Ord b, Show a, Show b) =>
-  [(a, b)] ->  Either [BimapBuildError a b] (Bimap a b)
+build :: forall a b.
+  (Ord a, Ord b, Show a, Show b) =>
+  [(a, b)] -> Validation [BimapBuildError a b] (Bimap a b)
 build pairs = do
-  let indexedItems = zip [0..] pairs
-      step :: ([BimapBuildError a b], Bimap a b)
-        -> (Int, (a, b))
-        -> ([BimapBuildError a b], Bimap a b)
-      step (errs, bimap) (index, (itemL, itemR)) =
+  let step index (errs, bimap) (itemL, itemR) =
         case (Bimap.lookup itemL bimap, Bimap.lookupR itemR bimap) of
           (Nothing, Nothing) ->
             ( errs
@@ -50,20 +51,26 @@ build pairs = do
               : errs
             , bimap
             )
-      (errors, results) = foldl' step ([], Bimap.empty) indexedItems
+      (errors, result) = ifoldl' step ([], Bimap.empty) pairs
   case errors of
-    [] -> Right results
-    _ : _ -> Left errors
+    [] -> Success result
+    _ : _ -> Failure errors
 
-overList :: (Ord a, Ord b) =>
-  Bimap a b -> [a] -> Either [BimapListError a] [b]
-overList bimap items = do
-  let indexedItems = zip [0..] items
-      step (index, item) =
+apply :: (Ord a, Ord b, TraversableWithIndex Int t) =>
+  Bimap a b -> t a -> Validation [BimapListError a] (t b)
+apply bimap items = do
+  let step index item =
         case Bimap.lookup item bimap of
-          Nothing -> Left BimapListError {item, index}
-          Just result -> Right result
-      (errors, results) = partitionEithers (step <$> indexedItems)
-  case errors of
-    [] -> Right results
-    _ : _ -> Left errors
+          Nothing -> Failure [BimapListError {item, index}]
+          Just result -> Success result
+  itraverse step items
+
+displayCounts :: (Ord a, Show a, Functor t, Foldable t) => t a -> IO ()
+displayCounts items = do
+  let counts = (, 1 :: Int) <$> items
+  pPrintLightBg $ Map.fromListWith (+) (Foldable.toList counts)
+
+runStages :: FilePath -> IO ()
+runStages filePath = do
+  bytes <- ByteString.readFile filePath
+  displayCounts (ByteString.unpack bytes)
