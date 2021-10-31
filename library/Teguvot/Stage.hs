@@ -7,6 +7,7 @@ import Data.ByteString qualified as ByteString
 import Data.Char (ord)
 import Data.Foldable qualified as Foldable
 import Data.Map.Strict qualified as Map
+import Data.Text (Text)
 import Data.Validation (Validation (..))
 import Data.Word (Word8)
 import GHC.Generics (Generic)
@@ -65,10 +66,28 @@ apply bimap items = do
           Just result -> Success result
   itraverse step items
 
+getScale :: Int -> Int -> Int -> Text
+getScale scale inputMax inputValue =
+  let stepValue =
+        let (maxDivScale, maxModScale) = inputMax `divMod` scale
+        in
+          if maxModScale == 0
+            then maxDivScale
+            else maxDivScale + 1
+      go value = 
+        if value <= 0
+          then ""
+          else "*" <> go (value - stepValue)
+  in go inputValue
+
 displayCounts :: (Ord a, Show a, Functor t, Foldable t) => t a -> IO ()
 displayCounts items = do
   let counts = (, 1 :: Int) <$> items
-  pPrintLightBg $ Map.fromListWith (+) (Foldable.toList counts)
+      countMap = Map.fromListWith (+) (Foldable.toList counts)
+      countAssocs = Map.toList countMap
+      maxCount = maximum (snd <$> countAssocs)
+      triples = (\(x, v) -> (x, v, getScale 20 maxCount v)) <$> countAssocs
+  pPrintLightBg triples
 
 runStages :: FilePath -> IO ()
 runStages filePath = do
