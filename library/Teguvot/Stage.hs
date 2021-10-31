@@ -66,8 +66,8 @@ apply bimap items = do
           Just result -> Success result
   itraverse step items
 
-getScale :: Int -> Int -> Int -> Text
-getScale scale inputMax inputValue =
+getScale :: Scale -> Int -> Int -> Text
+getScale (Scale scale) inputMax inputValue =
   let stepValue =
         let (maxDivScale, maxModScale) = inputMax `divMod` scale
         in
@@ -80,16 +80,18 @@ getScale scale inputMax inputValue =
           else "*" <> go (value - stepValue)
   in go inputValue
 
-displayCounts :: (Ord a, Show a, Functor t, Foldable t) => t a -> IO ()
-displayCounts items = do
+newtype Scale = Scale Int
+
+displayCounts :: (Ord a, Show a, Functor t, Foldable t) => Scale -> t a -> IO ()
+displayCounts scale items = do
   let counts = (, 1 :: Int) <$> items
       countMap = Map.fromListWith (+) (Foldable.toList counts)
       countAssocs = Map.toList countMap
       maxCount = maximum (snd <$> countAssocs)
-      triples = (\(x, v) -> (x, v, getScale 20 maxCount v)) <$> countAssocs
+      triples = (\(x, v) -> (x, v, getScale scale maxCount v)) <$> countAssocs
   pPrintLightBg triples
 
 runStages :: FilePath -> IO ()
 runStages filePath = do
   bytes <- ByteString.readFile filePath
-  displayCounts (ByteString.unpack bytes)
+  displayCounts (Scale 20) (ByteString.unpack bytes)
