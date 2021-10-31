@@ -7,16 +7,12 @@ import Data.ByteString qualified as ByteString
 import Data.Char (ord)
 import Data.Foldable qualified as Foldable
 import Data.Map.Strict qualified as Map
+import Data.Set qualified as Set
 import Data.Text (Text)
 import Data.Validation (Validation (..))
 import Data.Word (Word8)
 import GHC.Generics (Generic)
 import Text.Pretty.Simple (pPrintLightBg)
-
-sample :: Bimap Word8 ()
-sample = Bimap.fromList
-  [ ((fromIntegral . ord) '\n', ())
-  ]
 
 data BimapListError a = BimapListError
   { item :: a
@@ -81,17 +77,42 @@ getScale (Scale scale) inputMax inputValue =
   in go inputValue
 
 newtype Scale = Scale Int
+data Count = Count
+  { amount :: Text
+  , count :: Int
+  }
+  deriving (Generic, Show)
+data DataCounts a = DataCounts 
+  { countTotal :: Int
+  , countUnique :: Int
+  , valueCount :: [(a, Count)]
+  }
+  deriving (Generic, Show)
 
-displayCounts :: (Ord a, Show a, Functor t, Foldable t) => Scale -> t a -> IO ()
-displayCounts scale items = do
+dataCounts :: (Ord a, Show a, Functor t, Foldable t) => Scale -> t a
+  -> DataCounts a
+dataCounts scale items =
   let counts = (, 1 :: Int) <$> items
       countMap = Map.fromListWith (+) (Foldable.toList counts)
       countAssocs = Map.toList countMap
       maxCount = maximum (snd <$> countAssocs)
-      triples = (\(x, v) -> (x, v, getScale scale maxCount v)) <$> countAssocs
-  pPrintLightBg triples
+      triples =
+        (\(x, v) ->
+          (x, Count {amount = getScale scale maxCount v, count = v }))
+          <$> countAssocs
+  
+  in DataCounts
+    { countTotal = sum (Map.elems countMap)
+    , countUnique = Set.size (Map.keysSet countMap)
+    , valueCount = triples
+    }
+
+sample :: Bimap Word8 ()
+sample = Bimap.fromList
+  [ ((fromIntegral . ord) '\n', ())
+  ]
 
 runStages :: FilePath -> IO ()
 runStages filePath = do
   bytes <- ByteString.readFile filePath
-  displayCounts (Scale 20) (ByteString.unpack bytes)
+  pPrintLightBg $ dataCounts (Scale 10) (ByteString.unpack bytes)
